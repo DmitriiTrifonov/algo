@@ -3,6 +3,8 @@ package linked
 import (
 	"fmt"
 	"time"
+
+	"github.com/DmitriiTrifonov/algo/list"
 )
 
 // SingleLinkedList implementation
@@ -31,7 +33,7 @@ func (s *SingleLinkedList) Add() {
 }
 
 // Reverse the list
-func (s *SingleLinkedList) Reverse() *SingleLinkedList {
+func (s *SingleLinkedList) Reverse() list.List {
 	var last *SingleLinkedList
 	current := s
 	next := current.next
@@ -61,10 +63,21 @@ func (s *SingleLinkedList) Length() (len int) {
 // GetAddresses gets an elements addresses at string format
 func (s *SingleLinkedList) GetAddresses() (addr []string) {
 	current := s
-	len := s.Length()
-	addr = make([]string, len)
+	length := s.Length()
+	addr = make([]string, length)
 	for i := range addr {
 		addr[i] = fmt.Sprintf("%p", current)
+		current = current.next
+	}
+	return
+}
+
+// Slice converts list to slice
+func (s *SingleLinkedList) Slice() (sl []list.List) {
+	current := s
+	sl = make([]list.List, s.Length())
+	for i := range sl {
+		sl[i] = current
 		current = current.next
 	}
 	return

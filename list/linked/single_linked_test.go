@@ -19,16 +19,23 @@ func TestSingleLinkedList_Reverse(t *testing.T) {
 	listAddresses := list.GetAddresses()
 
 	reversed := list.Reverse()
-	reversedAddresses := reversed.GetAddresses()
+	var reversedAddresses []string
+	if v, ok := reversed.(*SingleLinkedList); ok {
+		reversedAddresses = v.GetAddresses()
+	}
 
 	length := len(reversedAddresses)
+
+	if length == 0 || reversedAddresses == nil {
+		t.Fatal("reversedAddresses are empty or nil")
+	}
 
 	require.Equal(t, len(listAddresses), length)
 
 	for i, addr := range listAddresses {
 		rev := reversedAddresses[(length-1)-i]
 		if addr != rev {
-			t.Fatalf("%s is not equal to %s", addr, rev)
+			t.Fatalf("%s is not equal to %s\n", addr, rev)
 		}
 	}
 
